@@ -6,8 +6,6 @@ use App\Aggregates\Channel;
 use App\Entities\Providers\AwsSesProvider;
 use App\Entities\Providers\TwilioProvider;
 use App\Templates\NotificationTemplate;
-use Exception;
-use Illuminate\Support\Facades\Log;
 use Mockery;
 use Tests\TestCase;
 
@@ -23,8 +21,7 @@ class ChannelTest extends TestCase
             ->andReturn(true);
 
         $twilioProviderMock->shouldReceive('send')
-            ->once()
-            ->andReturn(true);
+            ->never();
 
         $templateMock = Mockery::mock(NotificationTemplate::class);
 
@@ -38,15 +35,12 @@ class ChannelTest extends TestCase
 
     public function testSendWithOneProviderFailure(): void
     {
-        Log::shouldReceive('error')
-            ->once();
-
         $awsSesProviderMock = Mockery::mock(AwsSesProvider::class);
         $twilioProviderMock = Mockery::mock(TwilioProvider::class);
 
         $awsSesProviderMock->shouldReceive('send')
             ->once()
-            ->andThrow(new Exception('Provider 1 failed'));
+            ->andReturn(false);
 
         $twilioProviderMock->shouldReceive('send')
             ->once()
@@ -64,19 +58,16 @@ class ChannelTest extends TestCase
 
     public function testSendWithAllProvidersFailure(): void
     {
-        Log::shouldReceive('error')
-            ->twice();
-
         $awsSesProviderMock = Mockery::mock(AwsSesProvider::class);
         $twilioProviderMock = Mockery::mock(TwilioProvider::class);
 
         $awsSesProviderMock->shouldReceive('send')
             ->once()
-            ->andThrow(new Exception('Provider 1 failed'));
+            ->andReturn(false);
 
         $twilioProviderMock->shouldReceive('send')
             ->once()
-            ->andThrow(new Exception('Provider 2 failed'));
+            ->andReturn(false);
 
         $templateMock = Mockery::mock(NotificationTemplate::class);
 

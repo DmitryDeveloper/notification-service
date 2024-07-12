@@ -4,8 +4,9 @@ namespace App\Entities\Providers;
 
 use App\Templates\NotificationTemplate;
 use App\Templates\SMSTemplate;
-use Twilio\Exceptions\TwilioException;
+use Illuminate\Support\Facades\Log;
 use Twilio\Rest\Client;
+use Exception;
 
 class TwilioProvider extends BaseProvider
 {
@@ -19,18 +20,22 @@ class TwilioProvider extends BaseProvider
     /**
      * @param SMSTemplate $notification
      * @return bool
-     * @throws TwilioException
      */
     public function send(NotificationTemplate $notification): bool
     {
-        $message = $this->client->messages->create(
-            $notification->getPhone(),
-            [
-                'from' => config('services.twilio.from'),
-                'body' => $notification->getMessage(),
-            ]
-        );
+        try {
+            $message = $this->client->messages->create(
+                $notification->getPhone(),
+                [
+                    'from' => config('services.twilio.from'),
+                    'body' => $notification->getMessage(),
+                ]
+            );
 
-        return $message->sid !== null;
+            return $message->sid !== null;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return false;
+        }
     }
 }

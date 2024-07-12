@@ -2,9 +2,11 @@
 
 namespace App\Entities\Providers;
 
+use Exception;
 use App\Templates\NotificationTemplate;
 use App\Templates\PushTemplate;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class PushyProvider
 {
@@ -28,19 +30,24 @@ class PushyProvider
      */
     public function send(NotificationTemplate $notification): bool
     {
-        $response = $this->client->post($this->clientUrl . '/push?api_key=' . $this->apiKey, [
-            'json' => [
-                'to' => $notification->getDeviceToken(),
-                'data' => [
-                    'message' => $notification->getMessage(),
+        try {
+            $response = $this->client->post($this->clientUrl . '/push?api_key=' . $this->apiKey, [
+                'json' => [
+                    'to' => $notification->getDeviceToken(),
+                    'data' => [
+                        'message' => $notification->getMessage(),
+                    ],
+                    'notification' => [
+                        'title' => $notification->getTitle(),
+                        'body' => $notification->getMessage(),
+                    ],
                 ],
-                'notification' => [
-                    'title' => $notification->getTitle(),
-                    'body' => $notification->getMessage(),
-                ],
-            ],
-        ]);
+            ]);
 
-        return $response->getStatusCode() === 200;
+            return $response->getStatusCode() === 200;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return false;
+        }
     }
 }

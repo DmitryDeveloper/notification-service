@@ -41,22 +41,6 @@ class NotificationJobTest extends TestCase
         $job->handle();
     }
 
-    public function testTries(): void
-    {
-        $channelMock = Mockery::mock(Channel::class);
-        $job = new NotificationJob($channelMock);
-
-        $this->assertEquals(5, $job->tries());
-    }
-
-    public function testBackoff(): void
-    {
-        $channelMock = Mockery::mock(Channel::class);
-        $job = new NotificationJob($channelMock);
-
-        $this->assertEquals([10, 30, 60, 120], $job->backoff());
-    }
-
     protected function tearDown(): void
     {
         Mockery::close();

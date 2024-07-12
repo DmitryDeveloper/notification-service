@@ -3,8 +3,10 @@
 namespace App\Entities\Providers;
 
 use App\Templates\EmailTemplate;
+use Exception;
 use Aws\Ses\SesClient;
 use App\Templates\NotificationTemplate;
+use Illuminate\Support\Facades\Log;
 
 class AwsSesProvider extends BaseProvider
 {
@@ -21,23 +23,30 @@ class AwsSesProvider extends BaseProvider
      */
     public function send(NotificationTemplate $notification): bool
     {
-        return (bool)$this->client->sendEmail([
-            'Source' => config('services.ses.from'),
-            'Destination' => [
-                'ToAddresses' => [$notification->getRecipientAddress()],
-            ],
-            'Message' => [
-                'Subject' => [
-                    'Data' => $notification->getSubject(),
-                    'Charset' => 'UTF-8',
+        try {
+            $this->client->sendEmail([
+                'Source' => config('services.ses.from'),
+                'Destination' => [
+                    'ToAddresses' => [$notification->getRecipientAddress()],
                 ],
-                'Body' => [
-                    'Text' => [
-                        'Data' => $notification->getMessage(),
+                'Message' => [
+                    'Subject' => [
+                        'Data' => $notification->getSubject(),
                         'Charset' => 'UTF-8',
                     ],
+                    'Body' => [
+                        'Text' => [
+                            'Data' => $notification->getMessage(),
+                            'Charset' => 'UTF-8',
+                        ],
+                    ],
                 ],
-            ],
-        ]);
+            ]);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return false;
+        }
+
+        return true;
     }
 }

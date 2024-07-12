@@ -42,6 +42,7 @@ class Channel
 
     /**
      * @return bool
+     * @throws TemplateIsNotSetException
      */
     public function send(): bool
     {
@@ -50,14 +51,10 @@ class Channel
          * @var BaseProvider $provider
          */
         foreach ($this->providers as $provider) {
-            try {
-                $provider->send($this->getNotificationTemplate());
+            if ($provider->send($this->getNotificationTemplate())) {
+                Log::info(sprintf('Notification was sent: channel %s, provider %s', $this->code, get_class($provider)));
                 $success = true;
-            } catch (Exception $exception) {
-                Log::error(sprintf(
-                    'Provider sending error: channel %s, provider %s, message %s',
-                    $this->code, get_class($provider), $exception->getMessage()
-                ));
+                break;
             }
         }
 
@@ -75,7 +72,7 @@ class Channel
 
     /**
      * @return NotificationTemplate
-     * @throws Exception
+     * @throws TemplateIsNotSetException
      */
     public function getNotificationTemplate(): NotificationTemplate
     {

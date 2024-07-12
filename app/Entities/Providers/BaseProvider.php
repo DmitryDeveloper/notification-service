@@ -11,6 +11,7 @@ abstract class BaseProvider
         'aws-ses' => AwsSesProvider::class,
         'twilio' => TwilioProvider::class,
         'send-grid' => SendGridProvider::class,
+        'pushy' => PushyProvider::class,
         //etc
     ];
 

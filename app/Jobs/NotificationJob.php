@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Aggregates\Channel;
 use App\Exceptions\SendingNotificationException;
+use App\Exceptions\TemplateIsNotSetException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -25,8 +26,9 @@ class NotificationJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * @return void
      * @throws SendingNotificationException
+     * @throws TemplateIsNotSetException
      */
     public function handle(): void
     {
