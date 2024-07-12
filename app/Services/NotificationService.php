@@ -29,9 +29,10 @@ readonly class NotificationService
             try {
                 $channel = $this->channelRepository->getByCode($channelCode);
 
-                //TODO requirement missing, "Send the same notification via several different channels".
+                //TODO not entirely clear requirement: "Send the same notification via several different channels".
                 // What if one channel does not exist or disabled or payload is broken for specific channel?
                 // Should we continue with rest passed channels or we should rollback transaction?
+                // I decided to use this option "continue with rest passed channels"
                 if (!$channel->isEnabled()) {
                     throw new ChannelDisabled($channelCode);
                 }
