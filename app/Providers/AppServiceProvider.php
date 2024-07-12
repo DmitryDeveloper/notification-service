@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use App\Repositories\ChannelRepository;
+use App\Repositories\ChannelRepositoryInterface;
+use Aws\Ses\SesClient;
 use Illuminate\Support\ServiceProvider;
+use Twilio\Rest\Client as TwilioClient;
+use SendGrid;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +24,28 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app->bind(ChannelRepositoryInterface::class, ChannelRepository::class);
+
+        $this->app->singleton(SesClient::class, function ($app) {
+            return new SesClient([
+                'version' => 'latest',
+                'region' => config('services.ses.region'),
+                'credentials' => [
+                    'key' => config('services.ses.key'),
+                    'secret' => config('services.ses.secret'),
+                ],
+            ]);
+        });
+
+        $this->app->singleton(TwilioClient::class, function ($app) {
+            return new TwilioClient(
+                config('services.twilio.sid'),
+                config('services.twilio.token'),
+            );
+        });
+
+        $this->app->singleton(SendGrid::class, function ($app) {
+            return new SendGrid(config('services.sendgrid.api_key'));
+        });
     }
 }

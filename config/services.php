@@ -24,6 +24,23 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'sendgrid' => [
+        'api_key' => env('SENDGRID_API_KEY'),
+        'from' => env('SENDGRID_FROM_EMAIL'),
+    ],
+
+    'twilio' => [
+        'sid' => env('TWILIO_SID'),
+        'token' => env('TWILIO_AUTH_TOKEN'),
+        'from' => env('TWILIO_PHONE_NUMBER'),
+    ],
+
+    'pushy' => [
+        'api_url' => env('PUSHY_API_URL'),
+        'api_key' => env('PUSHY_API_KEY'),
+        'app_id' => env('PUSHY_APP_ID'),
+    ],
+
     'resend' => [
         'key' => env('RESEND_KEY'),
     ],
