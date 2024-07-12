@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Factories;
+namespace Tests\Unit;
 
 use App\Aggregates\Channel;
 use App\DTOs\NotificationDTO;

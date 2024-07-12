@@ -6,15 +6,12 @@ use App\Entities\Providers\AwsSesProvider;
 use App\Templates\EmailTemplate;
 use Aws\Ses\SesClient;
 use Aws\Result;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
 class AwsSesProviderTest extends TestCase
 {
-    use RefreshDatabase;
-
-    public function testSendEmailSuccess()
+    public function testSendEmailSuccess(): void
     {
         $notificationTemplateMock = Mockery::mock(EmailTemplate::class);
         $notificationTemplateMock->shouldReceive('getRecipientAddress')
