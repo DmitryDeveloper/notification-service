@@ -44,9 +44,8 @@ COPY . /var/www
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
 
-# Set proper permissions for storage and cache directories
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
-    && chmod -R 777 /var/www/storage /var/www/bootstrap/cache
+# Change current user to www
+USER www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

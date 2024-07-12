@@ -18,7 +18,7 @@ class ProvidersTableSeeder extends Seeder
         $pushChannel = Channel::where('code', 'push')->first();
 
         Provider::create([
-            'code' => 'aws_ses',
+            'code' => 'aws-ses',
             'name' => 'AWS SES',
             'is_enabled' => true,
             'channel_id' => $emailChannel->id
