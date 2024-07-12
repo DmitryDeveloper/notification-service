@@ -44,3 +44,21 @@ Other providers weren't tested since lack of time.
 
 ### Run tests
 - `docker-compose exec app php artisan test`
+
+# Usage
+
+POST request http://localhost/api/send
+json body:
+```
+{
+    "channels": ["sms", "email"],
+    "sender_uuid": "123e4567-e89b-12d3-a456-426614174000",
+    "recipient_uuid": "987e6543-b21a-32d1-c123-654321098765",
+    "recipient_address": "recipient@example.com",
+    "subject": "Test Subject",
+    "message": "This is a test message."
+}
+```
+The notification service responds with 200 if the payload is valid
+and then tries to send a message with the transmitted channels and configured providers using queue.
+The notification service takes care of failover and retries.
