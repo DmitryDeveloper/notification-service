@@ -8,6 +8,9 @@ use App\Templates\PushTemplate;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Not tested with real account
+ */
 class PushyProvider
 {
     private Client $client;

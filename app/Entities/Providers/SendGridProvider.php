@@ -9,6 +9,9 @@ use SendGrid;
 use SendGrid\Mail\Mail;
 use Exception;
 
+/**
+ * Not tested with real account
+ */
 class SendGridProvider extends BaseProvider
 {
     protected SendGrid $client;

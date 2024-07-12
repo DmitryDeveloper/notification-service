@@ -8,6 +8,10 @@ use Aws\Ses\SesClient;
 use App\Templates\NotificationTemplate;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Not tested with real account
+ * AWS SES requires to have real own domain so this is not free
+ */
 class AwsSesProvider extends BaseProvider
 {
     private SesClient $client;
