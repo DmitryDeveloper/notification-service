@@ -18,6 +18,13 @@ This service was tested with Twilio Provider on real account.
 AWS SES provider was tested via feature/unit tests (AWS SES requires to have real domain to test via aws console).
 Other providers weren't tested since lack of time.
 
+#### Code flow explanation
+1. NotificationController (accepts the request and calls the required service)
+2. NotificationService (Get Channel aggregate for each passed in request channel, call NotificationJob for each Channel)
+3. NotificationJob (Process Channel)
+4. Channel send() (Channel tries to send message via providers one by one)
+5. Provider send() (Sending message via client)
+
 # Installation
 
 ### Clone the repository and navigate to the project directory
