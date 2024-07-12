@@ -11,7 +11,8 @@ class Provider extends Model
 
     protected $fillable = [
         'channel_id',
-        'provider_code',
+        'code',
+        'name',
         'is_enabled'
     ];
 }

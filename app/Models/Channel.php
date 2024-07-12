@@ -11,6 +11,7 @@ class Channel extends Model
 
     protected $fillable = [
         'code',
+        'name',
         'is_enabled'
     ];
 }

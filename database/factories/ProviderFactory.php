@@ -21,6 +21,7 @@ class ProviderFactory extends Factory
             'channel_id' => Channel::factory(),
             'is_enabled' => $this->faker->boolean,
             'code' => $this->faker->word,
+            'name' => $this->faker->word,
         ];
     }
 }

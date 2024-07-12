@@ -18,6 +18,7 @@ class ChannelFactory extends Factory
     {
         return [
             'code' => $this->faker->unique()->word,
+            'name' => $this->faker->word,
             'is_enabled' => true
         ];
     }

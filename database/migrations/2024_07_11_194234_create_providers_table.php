@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->string('code');
+            $table->string('name');
             $table->unsignedBigInteger('channel_id');
             $table->foreign('channel_id')
                 ->references('id')
