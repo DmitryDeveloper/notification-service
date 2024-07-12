@@ -33,6 +33,6 @@ class NotificationController extends Controller
         );
 
         $notificationService->send($notification);
-        return response()->json();
+        return response()->json(['message' => 'Notification is being processed'], 200);
     }
 }
