@@ -53,4 +53,14 @@ class AwsSesProvider extends BaseProvider
 
         return true;
     }
+
+    public function __sleep() {
+        return [];
+    }
+
+    public function __wakeup() {
+        //Since we can't serialize AWS SES Client we need to re-create it when we unserialise
+        //https://laracasts.com/discuss/channels/laravel/an-error-occurredinstances-of-awss3s3client-cannot-be-serialized
+        $this->client = app(SesClient::class);
+    }
 }

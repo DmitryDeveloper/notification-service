@@ -22,6 +22,7 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+        'from'  => env('AWS_SES_FROM_ADDRESS')
     ],
 
     'sendgrid' => [

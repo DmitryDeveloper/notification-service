@@ -40,6 +40,7 @@ Other providers weren't tested since lack of time.
 ### Configure application
 - `docker-compose exec app php artisan migrate`
 - `docker-compose exec app php artisan db:seed` (this command will prepopulate DB with Channels and Providers)
+- `php artisan queue:work` run queue worker to process background notification jobs
 
 ### Run tests
 - `docker-compose exec app php artisan test`
