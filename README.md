@@ -9,7 +9,8 @@ and retried with progressive delay (NotificationJob class, backoff method),
 this is achievable because notification service utilizes queue.
 
 The service contains "/api/send" endpoint for delivering message.
-This endpoint uses throttle middleware 300 requests per hour (bonus task).
+This endpoint uses throttle middleware 300 requests per hour default configuration (bonus task).
+Throttling can be configured via env variables.
 
 Send endpoint has the ability to deliver one message through several different channels;
 for this, the code channels must be listed in the incoming request.
@@ -44,7 +45,11 @@ TWILIO_SID=your-twilio-sid
 TWILIO_AUTH_TOKEN=your-twilio-auth-token
 TWILIO_PHONE_NUMBER=your-twilio-phone-number
 ```
-
+- Update throttling configurations (by default 300 requests per hour):
+```
+THROTTLE_SEND_NOTIFICATIONS_REQUESTS_LIMIT=300
+THROTTLE_SEND_NOTIFICATIONS_WINDOW_IN_MINUTES=60
+```
 ### Start Docker containers
 - `docker-compose up`
 
