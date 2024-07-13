@@ -42,7 +42,7 @@ class NotificationTest extends TestCase
         $response->assertStatus(200);
 
         Queue::assertPushed(NotificationJob::class, function ($job) use ($channels) {
-            return in_array($job->channel->getCode(), $channels);
+            return in_array($job->notification->getChannel()->getCode(), $channels);
         });
     }
 
@@ -76,10 +76,10 @@ class NotificationTest extends TestCase
         $response->assertStatus(200);
 
         Queue::assertPushed(NotificationJob::class, function ($job) {
-            return $job->channel->getCode() === 'sms';
+            return $job->notification->getChannel()->getCode() === 'sms';
         });
         Queue::assertNotPushed(NotificationJob::class, function ($job) {
-            return $job->channel->getCode() === 'email';
+            return $job->notification->getChannel()->getCode() === 'email';
         });
     }
 }

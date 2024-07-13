@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Repositories\ChannelRepository;
-use App\Repositories\ChannelRepositoryInterface;
+use App\Repositories\NotificationRepository;
+use App\Repositories\NotificationRepositoryInterface;
 use Aws\Ses\SesClient;
 use Illuminate\Support\ServiceProvider;
 use Twilio\Rest\Client as TwilioClient;
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(ChannelRepositoryInterface::class, ChannelRepository::class);
+        $this->app->bind(NotificationRepositoryInterface::class, NotificationRepository::class);
 
         $this->app->singleton(SesClient::class, function ($app) {
             return new SesClient([

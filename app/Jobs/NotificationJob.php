@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Aggregates\Channel;
+use App\Aggregates\Notification;
 use App\Exceptions\SendingNotificationException;
 use App\Exceptions\TemplateIsNotSetException;
 use Illuminate\Bus\Queueable;
@@ -15,14 +15,14 @@ class NotificationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public Channel $channel;
+    public Notification $notification;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(Channel $channel)
+    public function __construct(Notification $notification)
     {
-        $this->channel = $channel;
+        $this->notification = $notification;
     }
 
     /**
@@ -32,10 +32,11 @@ class NotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $result = $this->channel->send();
+        $result = $this->notification->send();
 
         if (!$result) {
-            throw new SendingNotificationException($this->channel->getCode());
+            $this->notification->fail();
+            throw new SendingNotificationException($this->notification->getChannel()->getCode());
         }
     }
 

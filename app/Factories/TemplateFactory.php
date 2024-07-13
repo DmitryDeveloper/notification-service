@@ -2,12 +2,12 @@
 
 namespace App\Factories;
 
-use App\Aggregates\Channel;
 use App\DTOs\NotificationDTO;
-use App\Templates\NotificationTemplate;
+use App\Entities\Channel;
 use App\Templates\EmailTemplate;
-use App\Templates\SMSTemplate;
+use App\Templates\NotificationTemplate;
 use App\Templates\PushTemplate;
+use App\Templates\SMSTemplate;
 use InvalidArgumentException;
 
 class TemplateFactory

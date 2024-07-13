@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Aggregates\Channel;
 use App\DTOs\NotificationDTO;
 use App\DTOs\NotificationPayloadDTO;
 use App\DTOs\RecipientDTO;
+use App\Entities\Channel;
 use App\Factories\TemplateFactory;
 use App\Templates\EmailTemplate;
 use App\Templates\PushTemplate;

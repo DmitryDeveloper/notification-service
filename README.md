@@ -20,10 +20,12 @@ Other providers weren't tested since lack of time.
 
 #### Code flow explanation
 1. NotificationController (accepts the request and calls the required service)
-2. NotificationService (Get Channel aggregate for each passed in request channel, call NotificationJob for each Channel)
-3. NotificationJob (Process Channel)
-4. Channel send() (Channel tries to send message via providers one by one)
+2. NotificationService (Get Notification aggregate for each passed in request channel, call NotificationJob for each aggregate)
+3. NotificationJob (Process Notification)
+4. Notification send() (Notification aggregate tries to send message via providers one by one)
 5. Provider send() (Sending message via client)
+
+The Notification aggregate manages the channel and its providers, and encapsulate the logic for sending messages.
 
 # Installation
 
