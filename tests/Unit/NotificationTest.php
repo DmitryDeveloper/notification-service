@@ -35,7 +35,7 @@ class NotificationTest extends TestCase
 
         Log::shouldReceive('info')->once();
 
-        $notification = new Notification($notificationModel, $channelMock, $repositoryMock);
+        $notification = new Notification($notificationModel->getId(), $channelMock, $repositoryMock);
         $notification->addNotificationTemplate($templateMock);
 
         $this->assertTrue($notification->send());
@@ -51,7 +51,7 @@ class NotificationTest extends TestCase
         $channelMock->shouldReceive('getCode')->andReturn('test_channel');
 
         $notification = new Notification(
-            Mockery::mock(NotificationModel::class),
+            1,
             $channelMock,
             Mockery::mock(NotificationRepositoryInterface::class)
         );
@@ -60,26 +60,12 @@ class NotificationTest extends TestCase
         $this->assertFalse($notification->send());
     }
 
-    public function testIsChannelEnabled()
-    {
-        $channelMock = Mockery::mock(Channel::class);
-        $channelMock->shouldReceive('isEnabled')->andReturn(true);
-
-        $notification = new Notification(
-            new NotificationModel(),
-            $channelMock,
-            Mockery::mock(NotificationRepositoryInterface::class)
-        );
-
-        $this->assertTrue($notification->isChannelEnabled());
-    }
-
     public function testGetChannel()
     {
         $channelMock = Mockery::mock(Channel::class);
 
         $notification = new Notification(
-            new NotificationModel(),
+            1,
             $channelMock,
             Mockery::mock(NotificationRepositoryInterface::class)
         );
@@ -92,7 +78,7 @@ class NotificationTest extends TestCase
         $templateMock = Mockery::mock(NotificationTemplate::class);
 
         $notification = new Notification(
-            new NotificationModel(),
+            1,
             Mockery::mock(Channel::class),
             Mockery::mock(NotificationRepositoryInterface::class)
         );
@@ -106,7 +92,7 @@ class NotificationTest extends TestCase
         $templateMock = Mockery::mock(NotificationTemplate::class);
 
         $notification = new Notification(
-            new NotificationModel(),
+            1,
             Mockery::mock(Channel::class),
             Mockery::mock(NotificationRepositoryInterface::class)
         );

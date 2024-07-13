@@ -41,7 +41,7 @@ readonly class NotificationRepository implements NotificationRepositoryInterface
             'status' => NotificationStatus::PENDING->value
         ]);
 
-        return new Notification($model, $channel, $this);
+        return new Notification($model->getId(), $channel, $this);
     }
 
     public function fail(int $id): void

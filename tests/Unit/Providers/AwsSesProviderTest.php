@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Providers;
 
 use App\Entities\Providers\AwsSesProvider;
 use App\Templates\EmailTemplate;
-use Aws\Ses\SesClient;
 use Aws\Result;
+use Aws\Ses\SesClient;
 use Mockery;
 use Tests\TestCase;
 

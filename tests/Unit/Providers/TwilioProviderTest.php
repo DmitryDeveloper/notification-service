@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Providers;
 
-use Exception;
 use App\Entities\Providers\TwilioProvider;
 use App\Templates\SMSTemplate;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Mockery;
 use Tests\TestCase;
-use Twilio\Rest\Client;
 use Twilio\Rest\Api\V2010\Account\MessageInstance;
-use Illuminate\Support\Facades\Log;
+use Twilio\Rest\Client;
 
 class TwilioProviderTest extends TestCase
 {

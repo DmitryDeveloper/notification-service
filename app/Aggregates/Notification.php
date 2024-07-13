@@ -5,21 +5,20 @@ namespace App\Aggregates;
 use App\Entities\Channel;
 use App\Entities\Providers\BaseProvider;
 use App\Exceptions\TemplateIsNotSetException;
-use App\Models\Notification as NotificationModel;
 use App\Repositories\NotificationRepositoryInterface;
 use App\Templates\NotificationTemplate;
 use Illuminate\Support\Facades\Log;
 
 class Notification
 {
-    private NotificationModel $model;
+    private int $id;
     private Channel $channel;
     private NotificationTemplate $template;
     private NotificationRepositoryInterface $repository;
 
-    public function __construct(NotificationModel $model, Channel $channel, NotificationRepositoryInterface $repository)
+    public function __construct(int $id, Channel $channel, NotificationRepositoryInterface $repository)
     {
-        $this->model = $model;
+        $this->id = $id;
         $this->channel = $channel;
         $this->repository = $repository;
     }
@@ -67,8 +66,8 @@ class Notification
                     'Notification was sent: channel %s, provider %s',
                     $this->channel->getCode(), get_class($provider)
                 ));
-                $success = true;
                 $this->complete();
+                $success = true;
                 break;
             }
         }
@@ -78,11 +77,11 @@ class Notification
 
     public function fail(): void
     {
-        $this->repository->fail($this->model->getId());
+        $this->repository->fail($this->id);
     }
 
     public function complete(): void
     {
-        $this->repository->complete($this->model->getId());
+        $this->repository->complete($this->id);
     }
 }
