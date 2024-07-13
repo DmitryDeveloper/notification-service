@@ -9,10 +9,13 @@ and retried with progressive delay (NotificationJob class, backoff method),
 this is achievable because notification service utilizes queue.
 
 The service contains "/api/send" endpoint for delivering message.
+This endpoint uses throttle middleware 300 requests per hour (bonus task).
 
 Send endpoint has the ability to deliver one message through several different channels;
 for this, the code channels must be listed in the incoming request.
 Each channel and provider can be enabled/disabled via DB.
+
+During notification processing sender/recipient details are stored in notifications table (bonus task).
 
 This service was tested with Twilio Provider on real account.
 AWS SES provider was tested via feature/unit tests (AWS SES requires to have real domain to test via aws console).
@@ -61,6 +64,6 @@ json body:
     "message": "This is a test message."
 }
 ```
-The notification service responds with 200 if the payload is valid
+The notification service responds with 200 status if the payload is valid
 and then tries to send a message with the transmitted channels and configured providers using queue.
 The notification service takes care of failover and retries.
