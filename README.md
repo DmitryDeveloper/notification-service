@@ -65,7 +65,8 @@ json body:
     "channels": ["sms", "email"],
     "sender_uuid": "123e4567-e89b-12d3-a456-426614174000",
     "recipient_uuid": "987e6543-b21a-32d1-c123-654321098765",
-    "recipient_address": "recipient@example.com",
+    "recipient_phone": "+48111111111",
+    "recipient_email": "test@test.com",
     "subject": "Test Subject",
     "message": "This is a test message."
 }

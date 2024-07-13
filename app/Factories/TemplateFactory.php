@@ -21,16 +21,16 @@ class TemplateFactory
     {
         return match ($channel->getCode()) {
             'email' => new EmailTemplate(
-                $notificationDTO->recipient->recipientAddress,
+                $notificationDTO->recipient->recipientEmail,
                 $notificationDTO->payload->subject,
                 $notificationDTO->payload->message
             ),
             'sms' => new SMSTemplate(
-                $notificationDTO->recipient->recipientAddress,
+                $notificationDTO->recipient->recipientPhone,
                 $notificationDTO->payload->message
             ),
             'push' => new PushTemplate(
-                $notificationDTO->recipient->recipientAddress,
+                $notificationDTO->recipient->recipientDeviceToken,
                 $notificationDTO->payload->subject,
                 $notificationDTO->payload->message
             ),
