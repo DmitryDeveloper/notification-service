@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 /**
  * Not tested with real account
  */
-class PushyProvider
+class PushyProvider extends BaseProvider
 {
     private Client $client;
     private string $clientUrl;
@@ -21,7 +21,7 @@ class PushyProvider
     public function __construct()
     {
         $this->client = new Client();
-        $this->clientUrl = config('services.pushy.url');
+        $this->clientUrl = config('services.pushy.api_url');
         $this->apiKey = config('services.pushy.api_key');
         $this->appId = config('services.pushy.app_id');
     }
@@ -52,5 +52,15 @@ class PushyProvider
             Log::error($exception->getMessage());
             return false;
         }
+    }
+
+    public function __sleep()
+    {
+        return ['clientUrl', 'apiKey', 'appId'];
+    }
+
+    public function __wakeup()
+    {
+        $this->client = new Client();
     }
 }

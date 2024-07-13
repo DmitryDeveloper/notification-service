@@ -59,14 +59,49 @@ TWILIO_PHONE_NUMBER=your-twilio-phone-number
 # Usage
 
 POST request http://localhost/api/send
-json body:
+
+json body example 1 (several channels):
 ```
 {
-    "channels": ["sms", "email"],
+    "channels": ["sms", "email", "push"],
     "sender_uuid": "123e4567-e89b-12d3-a456-426614174000",
     "recipient_uuid": "987e6543-b21a-32d1-c123-654321098765",
     "recipient_phone": "+48111111111",
     "recipient_email": "test@test.com",
+    "recipient_device_token": "XXXXXXXXXXXXXXXXXXXXXX",
+    "subject": "Test Subject",
+    "message": "This is a test message."
+}
+```
+json body example 2 (only sms channel):
+```
+{
+    "channels": ["sms"],
+    "sender_uuid": "123e4567-e89b-12d3-a456-426614174000",
+    "recipient_uuid": "987e6543-b21a-32d1-c123-654321098765",
+    "recipient_phone": "+48111111111",
+    "subject": "Test Subject",
+    "message": "This is a test message."
+}
+```
+json body example 3 (only email channel):
+```
+{
+    "channels": ["email"],
+    "sender_uuid": "123e4567-e89b-12d3-a456-426614174000",
+    "recipient_uuid": "987e6543-b21a-32d1-c123-654321098765",
+    "recipient_email": "test@test.com",
+    "subject": "Test Subject",
+    "message": "This is a test message."
+}
+```
+json body example 4 (only push channel):
+```
+{
+    "channels": ["push"],
+    "sender_uuid": "123e4567-e89b-12d3-a456-426614174000",
+    "recipient_uuid": "987e6543-b21a-32d1-c123-654321098765",
+    "recipient_device_token": "XXXXXXXXXXXXXXXXXXXXXX",
     "subject": "Test Subject",
     "message": "This is a test message."
 }
