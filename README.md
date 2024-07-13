@@ -37,10 +37,16 @@ The Notification aggregate manages the channel and its providers, and encapsulat
 - `cd notification-service`
 
 ### Create the environment file
-`cp .env.example .env`
+- `cp .env.example .env` 
+- Update environment variables on your creds in `.env` (if you want to test on a real account):
+```
+TWILIO_SID=your-twilio-sid
+TWILIO_AUTH_TOKEN=your-twilio-auth-token
+TWILIO_PHONE_NUMBER=your-twilio-phone-number
+```
 
 ### Start Docker containers
-`docker-compose up`
+- `docker-compose up`
 
 ### Configure application
 - `docker-compose exec app php artisan migrate`
