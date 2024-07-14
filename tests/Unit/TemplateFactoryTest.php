@@ -24,7 +24,12 @@ class TemplateFactoryTest extends TestCase
         $this->notificationDTO = new NotificationDTO(
             ['email', 'sms', 'push'],
             'sender-uuid',
-            new RecipientDTO('recipient-uuid', 'recipient@example.com'),
+            new RecipientDTO(
+                'recipient-uuid',
+                'recipient@example.com',
+                '+1234567890',
+                'XXXXXXXXXXXXXXXX'
+            ),
             new NotificationPayloadDTO('Test Subject', 'Test Message')
         );
     }
@@ -35,9 +40,9 @@ class TemplateFactoryTest extends TestCase
         $template = TemplateFactory::createTemplate($channel, $this->notificationDTO);
 
         $this->assertInstanceOf(EmailTemplate::class, $template);
-        $this->assertEquals('Test Subject', $template->getSubject());
-        $this->assertEquals('Test Message', $template->getMessage());
-        $this->assertEquals('recipient@example.com', $template->getRecipientAddress());
+        $this->assertEquals($this->notificationDTO->payload->subject, $template->getSubject());
+        $this->assertEquals($this->notificationDTO->payload->message, $template->getMessage());
+        $this->assertEquals($this->notificationDTO->recipient->recipientEmail, $template->getRecipientAddress());
     }
 
     public function testCreateSMSTemplate(): void
@@ -46,8 +51,8 @@ class TemplateFactoryTest extends TestCase
         $template = TemplateFactory::createTemplate($channel, $this->notificationDTO);
 
         $this->assertInstanceOf(SMSTemplate::class, $template);
-        $this->assertEquals('recipient@example.com', $template->getPhone());
-        $this->assertEquals('Test Message', $template->getMessage());
+        $this->assertEquals($this->notificationDTO->recipient->recipientPhone, $template->getPhone());
+        $this->assertEquals($this->notificationDTO->payload->message, $template->getMessage());
     }
 
     public function testCreatePushTemplate(): void
@@ -56,9 +61,9 @@ class TemplateFactoryTest extends TestCase
         $template = TemplateFactory::createTemplate($channel, $this->notificationDTO);
 
         $this->assertInstanceOf(PushTemplate::class, $template);
-        $this->assertEquals('Test Subject', $template->getTitle());
-        $this->assertEquals('Test Message', $template->getMessage());
-        $this->assertEquals('recipient@example.com', $template->getDeviceToken());
+        $this->assertEquals($this->notificationDTO->payload->subject, $template->getTitle());
+        $this->assertEquals($this->notificationDTO->payload->message, $template->getMessage());
+        $this->assertEquals($this->notificationDTO->recipient->recipientDeviceToken, $template->getDeviceToken());
     }
 
     public function testCreateTemplateWithInvalidChannel(): void

@@ -22,6 +22,7 @@ class NotificationTest extends TestCase
         $senderUuid = $this->faker->uuid;
         $recipientUuid = $this->faker->uuid;
         $recipientAddress = $this->faker->email;
+        $recipientPhone = $this->faker->phoneNumber;
         $subject = $this->faker->sentence;
         $message = $this->faker->paragraph;
 
@@ -34,7 +35,8 @@ class NotificationTest extends TestCase
             'channels' => $channels,
             'sender_uuid' => $senderUuid,
             'recipient_uuid' => $recipientUuid,
-            'recipient_address' => $recipientAddress,
+            'recipient_email' => $recipientAddress,
+            'recipient_phone' => $recipientPhone,
             'subject' => $subject,
             'message' => $message,
         ]);
@@ -54,6 +56,7 @@ class NotificationTest extends TestCase
         $senderUuid = $this->faker->uuid;
         $recipientUuid = $this->faker->uuid;
         $recipientAddress = $this->faker->email;
+        $recipientPhone = $this->faker->phoneNumber;
         $subject = $this->faker->sentence;
         $message = $this->faker->paragraph;
 
@@ -68,7 +71,8 @@ class NotificationTest extends TestCase
             'channels' => $channels,
             'sender_uuid' => $senderUuid,
             'recipient_uuid' => $recipientUuid,
-            'recipient_address' => $recipientAddress,
+            'recipient_email' => $recipientAddress,
+            'recipient_phone' => $recipientPhone,
             'subject' => $subject,
             'message' => $message,
         ]);
