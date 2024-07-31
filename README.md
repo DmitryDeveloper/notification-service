@@ -9,18 +9,14 @@ and retried with progressive delay (NotificationJob class, backoff method),
 this is achievable because notification service utilizes queue.
 
 The service contains "/api/send" endpoint for delivering message.
-This endpoint uses throttle middleware 300 requests per hour default configuration (bonus task).
+This endpoint uses throttle middleware 300 requests per hour default configuration.
 Throttling can be configured via env variables.
 
 Send endpoint has the ability to deliver one message through several different channels;
 for this, the code channels must be listed in the incoming request.
 Each channel and provider can be enabled/disabled via DB.
 
-During notification processing sender/recipient details are stored in notifications table (bonus task).
-
-This service was tested with Twilio Provider on real account.
-AWS SES provider was tested via feature/unit tests (AWS SES requires to have real domain to test via aws console).
-Other providers weren't tested since lack of time.
+During notification processing sender/recipient details are stored in notifications table.
 
 #### Code flow explanation
 1. NotificationController (accepts the request and calls the required service)
